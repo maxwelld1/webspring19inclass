@@ -15,16 +15,16 @@
 import { Globals } from "@/models/api";
 import { MyFriends } from "../models/users.js";
 
-GetFriends();
+//GetFriends();
 
 export default {
     data: () => ({
         Globals: Globals,
         friends: []
-    }),
-    async mounted(){
-        this.friends = await GetFriends();
-    }
+    })//,
+    //async mounted(){
+    //   this.friends = await GetFriends();
+    //}
 }
 </script>
 

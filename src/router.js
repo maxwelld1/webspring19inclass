@@ -7,8 +7,6 @@ import MyFriends from './views/MyFriends.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
@@ -16,7 +14,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/my-friends',
+      path: '/MyFriends',
       name: 'my-friends',
       component: MyFriends
     },
