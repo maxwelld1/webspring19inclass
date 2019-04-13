@@ -17,7 +17,7 @@
       </div>
       <div class="card-body">
         <h4 class="card-title">Register</h4>
-        <p class="card-text">
+        <div class="card-text">
             <form @submit.prevent="submit">
                 <div class="form-group">
                   <label for="FirstName">First Name</label>
@@ -29,7 +29,7 @@
                   <label for="LastName">Last Name</label>
                   <input type="text" v-model="data.LastName"
                     class="form-control" name="LastName" id="LastName" aria-describedby="helpLastName" placeholder="Last Name">
-                  <small id="helpLastName" class="form-text text-muted">Sir Name</small>
+                  <small id="helpLastName" class="form-text text-muted">Surname</small>
                 </div>
                 <div class="form-group">
                   <label for="Password">Password</label>
@@ -44,22 +44,43 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
-        </p>
+        </div>
       </div>
     </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card border-success" v-if="newUser">
+        <div class="card-body">
+          <h4 class="card-title">Congrats! You've Registered</h4>
+          <p class="card-text">
+            {{newUser.FirstName}} {{newUser.LastName}} 
+          </p>
+        </div>
+      </div>
     </div>
 </div>
 </template>
 
 <script>
+import { Globals } from "@/models/api";
 import { Register } from "@/models/users";
+import toastr from 'toastr';
+import 'toastr/build/toastr.css';
 export default {
     data: ()=> ({
-        data: {}
+        data: {},
+        newUser: null
     }),
     methods: {
-        submit(){
-            Register(this.data);
+        async submit(){
+            try {
+              const m = await Register(this.data);
+              this.newUser = m;
+              toastr.success("You've registered successfully!")
+            } catch (error) {
+              Globals.errors.push(error);
+              toastr.error(error.msg);
+            }
         }
     }
 }
